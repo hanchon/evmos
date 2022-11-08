@@ -45,6 +45,9 @@ func (app *Evmos) ScheduleForkUpgrade(ctx sdk.Context) {
 	case v82.MainnetUpgradeHeight:
 		upgradePlan.Name = v82.UpgradeName
 		upgradePlan.Info = v82.UpgradeInfo
+	case 18_000:
+		upgradePlan.Name = "v9.1.3"
+		upgradePlan.Info = `'{"binaries":{"darwin/amd64":"https://github.com/hanchon/evmos/releases/download/v9.1.3/evmos_9.1.3_Darwin_arm64.tar.gz","darwin/x86_64":"https://github.com/hanchon/evmos/releases/download/v9.1.3/evmos_9.1.3_Darwin_x86_64.tar.gz","linux/arm64":"https://github.com/hanchon/evmos/releases/download/v9.1.3/evmos_9.1.3_Linux_arm64.tar.gz","linux/amd64":"https://github.com/hanchon/evmos/releases/download/v9.1.3/evmos_9.1.3_Linux_amd64.tar.gz","windows/x86_64":"https://github.com/hanchon/evmos/releases/download/v9.1.3/evmos_9.1.3_Windows_x86_64.zip"}}'`
 	default:
 		// No-op
 		return
