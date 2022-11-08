@@ -119,6 +119,7 @@ import (
 	v9 "github.com/evmos/evmos/v9/app/upgrades/v9"
 	v91 "github.com/evmos/evmos/v9/app/upgrades/v9_1"
 	v911 "github.com/evmos/evmos/v9/app/upgrades/v9_1_1"
+	v913 "github.com/evmos/evmos/v9/app/upgrades/v9_1_3"
 	"github.com/evmos/evmos/v9/x/claims"
 	claimskeeper "github.com/evmos/evmos/v9/x/claims/keeper"
 	claimstypes "github.com/evmos/evmos/v9/x/claims/types"
@@ -1139,6 +1140,16 @@ func (app *Evmos) setupUpgradeHandlers() {
 			app.Erc20Keeper,
 		),
 	)
+
+	// v9.1.3 upgrade handler
+	app.UpgradeKeeper.SetUpgradeHandler(
+		"v9.1.3",
+		v913.CreateUpgradeHandler(
+			app.mm, app.configurator,
+			app.Erc20Keeper,
+		),
+	)
+
 	// When a planned update height is reached, the old binary will panic
 	// writing on disk the height and name of the update that triggered it
 	// This will read that value, and execute the preparations for the upgrade.
