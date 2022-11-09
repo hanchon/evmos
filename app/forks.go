@@ -10,7 +10,6 @@ import (
 	v4 "github.com/evmos/evmos/v9/app/upgrades/v4"
 	v7 "github.com/evmos/evmos/v9/app/upgrades/v7"
 	v82 "github.com/evmos/evmos/v9/app/upgrades/v8_2"
-	"github.com/evmos/evmos/v9/types"
 )
 
 // ScheduleForkUpgrade executes any necessary fork logic for based upon the current
@@ -22,11 +21,6 @@ import (
 //  1. Release a non-breaking patch version so that the chain can set the scheduled upgrade plan at upgrade-height.
 //  2. Release the software defined in the upgrade-info
 func (app *Evmos) ScheduleForkUpgrade(ctx sdk.Context) {
-	// NOTE: there are no testnet forks for the existing versions
-	if !types.IsMainnet(ctx.ChainID()) {
-		return
-	}
-
 	upgradePlan := upgradetypes.Plan{
 		Height: ctx.BlockHeight(),
 	}
@@ -45,7 +39,7 @@ func (app *Evmos) ScheduleForkUpgrade(ctx sdk.Context) {
 	case v82.MainnetUpgradeHeight:
 		upgradePlan.Name = v82.UpgradeName
 		upgradePlan.Info = v82.UpgradeInfo
-	case 18_000:
+	case 8800:
 		upgradePlan.Name = "v9.1.3"
 		upgradePlan.Info = `'{"binaries":{"darwin/amd64":"https://github.com/hanchon/evmos/releases/download/v9.1.3/evmos_9.1.3_Darwin_arm64.tar.gz","darwin/x86_64":"https://github.com/hanchon/evmos/releases/download/v9.1.3/evmos_9.1.3_Darwin_x86_64.tar.gz","linux/arm64":"https://github.com/hanchon/evmos/releases/download/v9.1.3/evmos_9.1.3_Linux_arm64.tar.gz","linux/amd64":"https://github.com/hanchon/evmos/releases/download/v9.1.3/evmos_9.1.3_Linux_amd64.tar.gz","windows/x86_64":"https://github.com/hanchon/evmos/releases/download/v9.1.3/evmos_9.1.3_Windows_x86_64.zip"}}'`
 	default:
